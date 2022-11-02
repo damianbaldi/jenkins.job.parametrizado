@@ -1,25 +1,25 @@
-job('ejemplo2-job-DSL') {
-	description('Job DSL de ejemplo para el curso de Jenkins')
+job('ejemplo-job-DSL') {
+	description('Job DSL de ejemplo')	
   	scm {
-      		git('https://github.com/macloujulian/jenkins.job.parametrizado.git', 'main') { node ->
-        		node / gitConfigName('macloujulian')
-        		node / gitConfigEmail('macloujulian@gmail.com')
-      		}
-    	} 
+    	git('https://github.com/damianbaldi/jenkins.job.parametrizado.git', 'main') {node ->
+      		node / gitConfigName('damianbaldi')
+      		node / gitConfigEmail('dbaldi@teco.com.ar')
+    	}
+  	}
   	parameters {
-   		stringParam('nombre', defaultValue = 'Julian', description = 'Parametro de cadena para el Job Booleano')
-      		choiceParam('planeta', ['Mercurio', 'Venus', 'Tierrra', 'Marte', 'Jupiter', 'Saturno', 'Urano', 'Neptuno'])
-      		booleanParam('agente', false)
-    	}
+    	stringParam('nombre', defaultValue = 'Damian', description = 'Parametro de cadena para Job Booleano')
+      	choiceParam('Planeta', ['Mercurio', 'Venus', 'Tierra', 'Marte', 'Jupiter', 'Saturno', 'Urano', 'Neptuno'])
+      	booleanParam('agente', false)
+    }
   	triggers {
-    		cron('H/7 * * * *')
-    	}
-  	steps {
-    		shell("bash jobscript.sh")
-    	}
+		cron('H/7 * * * *')
+    }
+    steps {
+      	shell("bash jobscript.sh")   
+    }
   	publishers {
-      		mailer('macloujulian@gmail.com', true, true)
-      		slackNotifier {
+      	mailer('dbaldi@teco.com.ar', true, true)
+      	slackNotifier {
 		  notifyAborted(true)
 		  notifyEveryFailure(true)
 		  notifyNotBuilt(false)
@@ -34,7 +34,7 @@ job('ejemplo2-job-DSL') {
 		  sendAs(null)
 		  commitInfoChoice('NONE')
 		  teamDomain(null)
-		  authToken(null)
-        	}
-    	}
+		  authToken(null)     
+        }
+    }
 }
